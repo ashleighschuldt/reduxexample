@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators} from 'redux';
+import {Delete_Todos, Remove_Todo, Add_Todo} from '../actions/action';
 
 
 class Todos extends Component {
+  constructor(props){
+    super(props);
+    this.state ={
+      input: ""
+    };
+    this.onChange = this.onChange.bind(this);
+  }
   onNewTodo(e) {
-    this.props.dispatch({ type: 'ADD_TODO', payload: this.refs.newTodo.value })
+    this.props.Add_Todo(this.refs.newTodo.value, "hello world");
+    this.setState({input: ""});
+  }
+
+  onChange(e){
+      this.setState({input: e.target.value});
+  }
+
+  delete(e) {
+    this.props.Delete_Todos();
+  }
+
+  removeOne(todo){
+    this.props.Remove_Todo(todo);
   }
 
   render() {
@@ -12,14 +34,33 @@ class Todos extends Component {
       <div>
         <h2>Todos:</h2>
         {
-          this.props.todos.map(todo => <div><em>{todo}</em></div>)
+          this.props.todos.map((todo) => {
+            return(
+              <div
+                key={todo}
+              >
+                <em>{todo}</em>
+                <button onClick={() => {this.removeOne({todo});}}>x</button>
+              </div>
+            );
+
+          })
         }
 
-        <br /><input ref='newTodo' placeHolder='type new todo' type="text" />
-        <button onClick={this.onNewTodo.bind(this)}>enter new todo</button>
+        <br /><input ref='newTodo' onChange={this.onChange} placeholder='type new todo' type="text" value={this.state.input}/>
+        <button onClick={this.onNewTodo.bind(this)}>{this.props.currentPlayer}</button>
+        <button onClick={this.delete.bind(this)}>Delete</button>
+        <h1>{this.props.currentPlayer}</h1>
       </div>
     );
   }
 }
 
-export default connect(state => state)(Todos);
+function mapStateToProps({todos, currentPlayer}){
+  return {todos, currentPlayer};
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({Add_Todo, Remove_Todo, Delete_Todos}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todos);
