@@ -22,6 +22,7 @@ function currentPlayer(state = 'John', action) {
 }
 
 function todos(state = ['laundry', 'study Redux'], action) {
+  debugger
   switch (action.type) {
     case ADD_TODO:
       return [...state, action.payload];

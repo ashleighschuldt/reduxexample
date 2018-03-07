@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 class Counter extends Component {
   onIncrement(e) {
-    this.props.dispatch({ type: 'INCREMENT' })
+    debugger
+    this.props.dispatch({ type: 'INCREMENT', })
   }
 
   onDecrement(e) {
@@ -21,5 +22,7 @@ class Counter extends Component {
     );
   }
 }
-
-export default connect(state => state)(Counter);
+function mapStateToProps({counter}){
+  return {counter};
+}
+export default connect(mapStateToProps)(Counter);

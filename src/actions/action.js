@@ -23,8 +23,8 @@ export function Change_Current_Player(name){
     type: NEW_PLAYER,
   };
 }
-export function Add_Todo(todo, str){
-  alert(str);
+export function Add_Todo(todo){
+  debugger
   return{
     payload: todo,
     type: ADD_TODO,

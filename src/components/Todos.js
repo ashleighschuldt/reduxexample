@@ -13,7 +13,8 @@ class Todos extends Component {
     this.onChange = this.onChange.bind(this);
   }
   onNewTodo(e) {
-    this.props.Add_Todo(this.refs.newTodo.value, "hello world");
+    debugger
+    this.props.Add_Todo(this.refs.newTodo.value);
     this.setState({input: ""});
   }
 
@@ -51,13 +52,14 @@ class Todos extends Component {
         <button onClick={this.onNewTodo.bind(this)}>{this.props.currentPlayer}</button>
         <button onClick={this.delete.bind(this)}>Delete</button>
         <h1>{this.props.currentPlayer}</h1>
+        {this.props.counter}
       </div>
     );
   }
 }
 
-function mapStateToProps({todos, currentPlayer}){
-  return {todos, currentPlayer};
+function mapStateToProps({todos, currentPlayer, counter}){
+  return {todos, currentPlayer, counter};
 }
 function mapDispatchToProps(dispatch){
   return bindActionCreators({Add_Todo, Remove_Todo, Delete_Todos}, dispatch);
